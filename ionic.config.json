@@ -1,0 +1,7 @@
+{
+  "name": "consumption_buddy",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
