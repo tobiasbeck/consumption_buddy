@@ -29,7 +29,9 @@
             </ion-item>
 
             <ion-item>
-              <ion-label position="floating">{{ t('addConsumable.price') }}</ion-label>
+              <ion-label position="floating">
+                {{ t('addConsumable.price') }}
+              </ion-label>
               <ion-input
                 v-model.number="consumable.singlePrice"
                 inputmode="decimal"

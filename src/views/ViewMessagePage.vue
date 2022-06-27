@@ -3,14 +3,23 @@
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button :text="getBackButtonText()" default-href="/"></ion-back-button>
+          <ion-back-button
+            :text="getBackButtonText()"
+            default-href="/"
+          />
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    
-    <ion-content :fullscreen="true" v-if="message">
+
+    <ion-content
+      v-if="message"
+      :fullscreen="true"
+    >
       <ion-item>
-        <ion-icon :icon="personCircle" color="primary"></ion-icon>
+        <ion-icon
+          :icon="personCircle"
+          color="primary"
+        />
         <ion-label class="ion-text-wrap">
           <h2>
             {{ message.fromName }}
@@ -21,7 +30,7 @@
           <h3>To: <ion-note>Me</ion-note></h3>
         </ion-label>
       </ion-item>
-      
+
       <div class="ion-padding">
         <h1>{{ message.subject }}</h1>
         <p>
@@ -34,29 +43,15 @@
 
 <script lang="ts">
 import { useRoute } from 'vue-router';
-import { IonBackButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonNote, IonPage, IonToolbar } from '@ionic/vue';
+import {
+  IonBackButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonNote, IonPage, IonToolbar,
+} from '@ionic/vue';
 import { personCircle } from 'ionicons/icons';
 // import { getMessage } from '../data/messages';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'ViewMessagePage',
-  data() {
-    return {
-      personCircle,
-      getBackButtonText: () => {
-        const win = window as any;
-        const mode = win && win.Ionic && win.Ionic.mode;
-        return mode === 'ios' ? 'Inbox' : '';
-      }
-    }
-  },
-  setup() {
-    const route = useRoute();
-    // const message = getMessage(parseInt(route.params.id as string, 10));
-
-    // return { message }
-  },
   components: {
     IonBackButton,
     IonButtons,
@@ -68,6 +63,22 @@ export default defineComponent({
     IonNote,
     IonPage,
     IonToolbar,
+  },
+  setup() {
+    const route = useRoute();
+    // const message = getMessage(parseInt(route.params.id as string, 10));
+
+    // return { message }
+  },
+  data() {
+    return {
+      personCircle,
+      getBackButtonText: () => {
+        const win = window as any;
+        const mode = win && win.Ionic && win.Ionic.mode;
+        return mode === 'ios' ? 'Inbox' : '';
+      },
+    };
   },
 });
 </script>
