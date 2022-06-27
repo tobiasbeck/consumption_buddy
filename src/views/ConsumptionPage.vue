@@ -38,11 +38,25 @@
         class="empty"
       >
         <img
+          class="illustration"
           src="../assets/team.svg"
           alt="Empty"
         >
         <h2>{{ t('consumptionPage.empty') }}</h2>
       </div>
+      <ion-fab
+        slot="fixed"
+        horizontal="center"
+        vertical="bottom"
+        :edge="true"
+      >
+        <ion-fab-button
+          :router-link="{ name: 'consumption:add' }"
+          router-direction="forward"
+        >
+          <ion-icon :icon="icons.addOutline" />
+        </ion-fab-button>
+      </ion-fab>
     </ion-content>
     <ion-footer>
       <div class="total-price">
@@ -51,14 +65,6 @@
           <span class="price">{{ totalPriceFormatted }}</span>
         </ion-label>
       </div>
-      <ion-button
-        :router-link="{ name: 'consumption:add' }"
-        router-direction="forward"
-        style="margin: 0px;"
-        expand="full"
-      >
-        <ion-icon :icon="icons.addOutline" /> {{ t('consumptionPage.doAdd') }}
-      </ion-button>
     </ion-footer>
   </ion-page>
 </template>
@@ -66,6 +72,8 @@
 <script lang="ts">
 import {
   IonContent, IonHeader, IonFooter, IonButtons, IonButton, IonLabel, IonList, IonIcon, IonPage, IonTitle, IonToolbar,
+  IonFab,
+  IonFabButton,
 } from '@ionic/vue';
 import ConsumptionListItem from '@/components/ConsumptionListItem.vue';
 import { addOutline, cardOutline } from 'ionicons/icons';
@@ -88,6 +96,8 @@ export default defineComponent({
     IonFooter,
     IonButtons,
     IonButton,
+    IonFab,
+    IonFabButton,
   },
   setup() {
     const { t, n } = useI18n();

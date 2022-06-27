@@ -20,6 +20,7 @@
       <div class="payment-container">
         <div :class="{'illustration-container': true, ok: payed }">
           <img
+            class="illustration"
             src="../assets/payment.svg"
             alt="payment"
           >

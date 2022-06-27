@@ -3,7 +3,7 @@ export default {
   languageInt: 'German',
   localeFormat: 'de-DE',
   consumptionListItem: {
-    removeOne: 'Eins entfernen',
+    removeOne: '1',
     removeAll: 'Alle löschen',
   },
   consumptionPage: {

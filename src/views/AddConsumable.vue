@@ -23,14 +23,16 @@
         >
           <ion-list lines="full">
             <ion-item>
-              <ion-label>
+              <ion-label position="floating">
                 {{ t('addConsumable.productName') }}
               </ion-label><ion-input v-model="consumable.name" />
             </ion-item>
 
             <ion-item>
-              <ion-label>{{ t('addConsumable.price') }}</ion-label><ion-input
+              <ion-label position="floating">{{ t('addConsumable.price') }}</ion-label>
+              <ion-input
                 v-model.number="consumable.singlePrice"
+                inputmode="decimal"
                 type="number"
               />
             </ion-item>
@@ -115,14 +117,14 @@ export default defineComponent({
 
     const consumable = reactive({
       name: '',
-      singlePrice: 0,
+      singlePrice: undefined as number | undefined,
     });
     const complete = computed(() => consumable.name !== '' && consumable.singlePrice !== 0);
 
     const consumedStore = useConsumedStore();
 
     const add = () => {
-      consumedStore.add(consumable);
+      consumedStore.add(consumable as any);
       openLoc.value = false;
       emit('added');
     };
@@ -142,7 +144,7 @@ export default defineComponent({
 
 <style scoped>
 ion-modal {
-    --height: 25%;
+    --height: 50%;
     --border-radius: 16px;
     --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   }

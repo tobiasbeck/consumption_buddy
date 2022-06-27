@@ -15,16 +15,25 @@
     </ion-item>
     <ion-item-options side="end">
       <ion-item-option
+        :disabled="!(count > 1)"
+        color="light"
+        @click="emit('remove-one')"
+      >
+        <ion-icon
+          slot="start"
+          :icon="icons.removeCircleOutline"
+        />
+        <ion-label>{{ t('consumptionListItem.removeOne') }}</ion-label>
+      </ion-item-option>
+      <ion-item-option
         color="danger"
         @click="emit('remove-all')"
       >
-        {{ t('consumptionListItem.removeAll') }}
-      </ion-item-option>
-      <ion-item-option
-        v-if="count > 1"
-        @click="emit('remove-one')"
-      >
-        {{ t('consumptionListItem.removeOne') }}
+        <ion-icon
+          slot="start"
+          :icon="icons.trashOutline"
+        />
+        <ion-label>{{ t('consumptionListItem.removeAll') }}</ion-label>
       </ion-item-option>
     </ion-item-options>
   </ion-item-sliding>
@@ -34,7 +43,7 @@
 import {
   IonIcon, IonItem, IonLabel, IonNote, IonItemSliding, IonItemOptions, IonItemOption,
 } from '@ionic/vue';
-import { chevronForward } from 'ionicons/icons';
+import { trashOutline, removeCircleOutline } from 'ionicons/icons';
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
 
@@ -46,6 +55,7 @@ export default defineComponent({
     IonItemSliding,
     IonItemOptions,
     IonItemOption,
+    IonIcon,
   },
   props: {
     count: {
@@ -67,10 +77,11 @@ export default defineComponent({
       n,
       t,
       emit,
+      icons: {
+        trashOutline,
+        removeCircleOutline,
+      },
     };
-  },
-  data() {
-    return { chevronForward };
   },
   computed: {
     totalPrice(): string {
