@@ -2,7 +2,7 @@ FROM node:16.15.1-alpine as builder
 RUN apk add git openssh
 
 # NEEDED FOR NODE-CANVAS which is a dependency of trianglify
-RUN apk --no-cache add --virtual native-deps build-base g++ gcc libgcc libstdc++ linux-headers make pkgconfig python  pixman-dev  cairo-dev jpeg-dev pango-dev giflib-dev
+# RUN apk --no-cache add --virtual native-deps build-base g++ gcc libgcc libstdc++ linux-headers make pkgconfig  pixman-dev  cairo-dev jpeg-dev pango-dev giflib-dev
 
 COPY ./ /js/
 WORKDIR /js
