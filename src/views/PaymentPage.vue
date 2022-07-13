@@ -43,7 +43,7 @@
               size="large"
               @click="doPay"
             >
-              Ich habe bezahlt
+              {{ t('paymentPage.doPay') }}
             </ion-button>
           </div>
         </template>
@@ -62,9 +62,9 @@ import {
 import {
   IonContent, IonHeader, IonFooter, IonButtons, IonBackButton, IonButton, IonLabel, IonList, IonIcon, IonPage, IonTitle, IonToolbar,
 } from '@ionic/vue';
-import ConsumptionListItem from '@/components/ConsumptionListItem.vue';
 import { addOutline, cardOutline } from 'ionicons/icons';
 import { useI18n } from 'vue-i18n';
+import ConsumptionListItem from '@/components/ConsumptionListItem.vue';
 import SweetalertIcon from '@/components/SweetalertIcon.vue';
 import { useConsumedStore } from '../store/consumed';
 

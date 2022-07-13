@@ -33,7 +33,7 @@
                 {{ t('addConsumable.price') }}
               </ion-label>
               <ion-input
-                v-model.number="consumable.singlePrice"
+                v-model="consumable.singlePrice"
                 inputmode="decimal"
                 type="number"
               />
@@ -119,13 +119,21 @@ export default defineComponent({
 
     const consumable = reactive({
       name: '',
-      singlePrice: undefined as number | undefined,
+      singlePrice: undefined as string | number | undefined,
     });
-    const complete = computed(() => consumable.name !== '' && consumable.singlePrice !== 0);
+    const complete = computed(() => {
+      const inputOkay = consumable.name !== '' && consumable.singlePrice !== '' && consumable.singlePrice !== undefined;
+      // eslint-disable-next-line no-useless-escape
+      const formatOkay = (typeof consumable.singlePrice === 'string') && consumable.singlePrice.match(/^\d+([\.|,]\d{1,2})?$/);
+      return inputOkay && formatOkay;
+    });
 
     const consumedStore = useConsumedStore();
 
     const add = () => {
+      if (typeof consumable.singlePrice !== 'number') {
+        consumable.singlePrice = parseFloat(`${consumable.singlePrice}`.replace(',', '.').replace(/(\.{2,})/, '.'));
+      }
       consumedStore.add(consumable as any);
       openLoc.value = false;
       emit('added');
@@ -146,7 +154,7 @@ export default defineComponent({
 
 <style scoped>
 ion-modal {
-    --height: 50%;
+    --height: 400px;
     --border-radius: 16px;
     --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   }

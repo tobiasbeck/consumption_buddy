@@ -29,6 +29,7 @@ export default {
     subtitle: 'Schön das du da warst!',
     thankyou: 'Danke!',
     description: 'Bitte denke daran beim Restaurant deine konsumierten Gerichte und Getränke zu bezahlen. Wenn du hier alles ordentlich mitgetrackt hast sind das <strong>{price}</strong>. ',
+    doPay: 'Ich habe bezahlt',
   },
 };
 

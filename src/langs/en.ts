@@ -29,6 +29,7 @@ export default {
     subtitle: 'Thank you for your visit!',
     thankyou: 'Thank You!',
     description: 'Please remember to pay your food and drinks at the restaurant. If you have entered everything correctly you have ordered, the total is <strong>{price}</strong>.',
+    doPay: 'Ich habe bezahlt',
   },
 };
 
