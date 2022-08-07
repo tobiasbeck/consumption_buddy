@@ -12,6 +12,7 @@ export default {
     doPay: 'Bezahlen',
     totalPrice: 'Gesamt',
     empty: 'Noch nichts eingetragen! Füge unten einen Eintrag hinzu!',
+    warnNotAllPrices: 'Dein aktueller Gesamtbetrag könnte abweichen, da einige Preise unbekannt sind.',
   },
   addConsumptionPage: {
     title: 'Etwas hinzufügen',
@@ -22,13 +23,15 @@ export default {
     doAdd: 'Hinzufügen',
     doClose: 'Abbrechen',
     productName: 'Name',
-    price: 'Preis',
+    price: 'Preis (Optional)',
   },
   paymentPage: {
     title: 'Bezahlen',
     subtitle: 'Schön das du da warst!',
     thankyou: 'Danke!',
-    description: 'Bitte denke daran beim Restaurant deine konsumierten Gerichte und Getränke zu bezahlen. Wenn du hier alles ordentlich mitgetrackt hast sind das <strong>{price}</strong>. ',
+    description: 'Bitte denke daran beim Restaurant deine konsumierten Gerichte und Getränke zu bezahlen.',
+    descriptionPayment: ' Wenn du hier alles ordentlich mitgetrackt hast sind das <strong>{price}</strong> ({priceWithTip} mit 10% Trinkgeld).',
+    warnNotAllPrices: 'Dein aktueller Gesamtbetrag konnte nicht ermittelt werden, da einige Preise nicht bekannt sind.',
     doPay: 'Ich habe bezahlt',
   },
 };

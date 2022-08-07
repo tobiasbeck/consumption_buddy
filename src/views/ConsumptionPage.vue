@@ -5,7 +5,7 @@
         <ion-title>{{ t('consumptionPage.title') }}</ion-title>
         <ion-buttons slot="end">
           <ion-button
-            :disabled="totalPrice <= 0"
+            :disabled="consumed.length <= 0"
             :router-link="{ name: 'consumption:pay' }"
             router-direction="forward"
           >
@@ -59,7 +59,24 @@
       </ion-fab>
     </ion-content>
     <ion-footer>
-      <div class="total-price">
+      <ion-popover
+        v-if="pricesMissing"
+        side="top"
+        alignment="start"
+        trigger="warning-trigger"
+        style="margin-top:-24px;"
+      >
+        {{ $t('consumptionPage.warnNotAllPrices') }}
+      </ion-popover>
+      <div
+        id="warning-trigger"
+        class="total-price"
+      >
+        <ion-icon
+          v-if="pricesMissing"
+          color="warning"
+          :icon="icons.warning"
+        />
         <ion-label>
           {{ t('consumptionPage.totalPrice') }}
           <span class="price">{{ totalPriceFormatted }}</span>
@@ -74,9 +91,10 @@ import {
   IonContent, IonHeader, IonFooter, IonButtons, IonButton, IonLabel, IonList, IonIcon, IonPage, IonTitle, IonToolbar,
   IonFab,
   IonFabButton,
+  IonPopover,
 } from '@ionic/vue';
 import ConsumptionListItem from '@/components/ConsumptionListItem.vue';
-import { addOutline, cardOutline } from 'ionicons/icons';
+import { addOutline, cardOutline, warning } from 'ionicons/icons';
 import { computed, defineComponent, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useConsumedStore } from '../store/consumed';
@@ -98,6 +116,7 @@ export default defineComponent({
     IonButton,
     IonFab,
     IonFabButton,
+    IonPopover,
   },
   setup() {
     const { t, n } = useI18n();
@@ -114,13 +133,20 @@ export default defineComponent({
       icons: {
         addOutline,
         cardOutline,
+        warning,
       },
     };
   },
   computed: {
     totalPrice() {
-      const price = this.consumed.reduce((totalPrice: number, consumed) => totalPrice + consumed.count * consumed.singlePrice, 0);
+      const price = this.consumed.filter((consumed) => consumed.singlePrice !== undefined).reduce((totalPrice: number, consumed) => totalPrice + consumed.count * consumed.singlePrice, 0);
       return price;
+    },
+    pricesMissing() {
+      return this.consumed.find((consumed) => consumed.singlePrice === undefined) !== undefined;
+    },
+    containsOnePrice() {
+      return this.consumed.find((consumed) => consumed.singlePrice !== undefined) !== undefined;
     },
     totalPriceFormatted() {
       return this.n(this.totalPrice, 'currency');

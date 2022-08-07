@@ -36,7 +36,22 @@
         </div>
         <template v-if="!payed">
           <div><h1>{{ t('paymentPage.subtitle') }}</h1></div>
-          <p v-html="t('paymentPage.description', { price: totalPrice })" />
+          <p>
+            {{ t('paymentPage.description') }} <span
+              v-if="!missingPrices"
+              v-html="t('paymentPage.descriptionPayment', { price: totalPrice, priceWithTip: totalPriceWithTip })"
+            />
+          </p>
+
+          <ion-card
+            v-if="missingPrices"
+            color="warning"
+            class="missing-prices"
+          >
+            <ion-card-content>
+              {{ t('paymentPage.warnNotAllPrices') }}
+            </ion-card-content>
+          </ion-card>
           <div style="width: 100%;">
             <ion-button
               expand="block"
@@ -61,6 +76,7 @@ import {
 } from 'vue';
 import {
   IonContent, IonHeader, IonFooter, IonButtons, IonBackButton, IonButton, IonLabel, IonList, IonIcon, IonPage, IonTitle, IonToolbar,
+  IonCard, IonCardContent,
 } from '@ionic/vue';
 import { addOutline, cardOutline } from 'ionicons/icons';
 import { useI18n } from 'vue-i18n';
@@ -76,6 +92,8 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar,
+    IonCard,
+    IonCardContent,
 
     IonButtons,
     IonBackButton,
@@ -104,8 +122,15 @@ export default defineComponent({
   },
   computed: {
     totalPrice() {
-      const price = this.consumed.reduce((totalPrice: number, consumed) => totalPrice + consumed.count * consumed.singlePrice, 0);
+      const price = this.consumed.filter((c) => c.singlePrice !== undefined).reduce((totalPrice: number, consumed) => totalPrice + consumed.count * consumed.singlePrice, 0);
       return this.n(price, 'currency');
+    },
+    totalPriceWithTip() {
+      const price = this.consumed.filter((c) => c.singlePrice !== undefined).reduce((totalPrice: number, consumed) => totalPrice + consumed.count * consumed.singlePrice, 0);
+      return this.n(price * 1.1, 'currency');
+    },
+    missingPrices() {
+      return this.consumed.find((c) => c.singlePrice === undefined) !== undefined;
     },
   },
   methods: {},
@@ -117,6 +142,10 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   padding: 24px;
+
+  .missing-prices {
+    width: 100%;
+  }
   .illustration-container {
     display: flex;
     flex-direction: column;

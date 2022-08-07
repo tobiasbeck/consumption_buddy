@@ -8,7 +8,7 @@
       <ion-card-title class="ellipsis">
         {{ name }}
       </ion-card-title>
-      <ion-card-subtitle>
+      <ion-card-subtitle v-if="singlePrice !== undefined">
         {{ n(singlePrice, 'currency') }}
       </ion-card-subtitle>
     </ion-card-header>
@@ -38,7 +38,7 @@ export default defineComponent({
     },
     singlePrice: {
       type: Number,
-      default: 0,
+      default: undefined,
     },
   },
   setup() {

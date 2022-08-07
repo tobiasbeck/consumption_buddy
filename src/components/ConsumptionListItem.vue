@@ -9,7 +9,10 @@
           {{ name }}
         </h2>
       </ion-label>
-      <ion-label slot="end">
+      <ion-label
+        v-if="singlePrice !== undefined"
+        slot="end"
+      >
         {{ totalPrice }}
       </ion-label>
     </ion-item>
@@ -68,7 +71,7 @@ export default defineComponent({
     },
     singlePrice: {
       type: Number,
-      default: 0,
+      default: undefined,
     },
   },
   setup(props, { emit }) {
@@ -85,6 +88,9 @@ export default defineComponent({
   },
   computed: {
     totalPrice(): string {
+      if (this.singlePrice === undefined) {
+        return '';
+      }
       return this.n(this.count * this.singlePrice, 'currency');
     },
   },

@@ -122,9 +122,9 @@ export default defineComponent({
       singlePrice: undefined as string | number | undefined,
     });
     const complete = computed(() => {
-      const inputOkay = consumable.name !== '' && consumable.singlePrice !== '' && consumable.singlePrice !== undefined;
+      const inputOkay = consumable.name !== '';
       // eslint-disable-next-line no-useless-escape
-      const formatOkay = (typeof consumable.singlePrice === 'string') && consumable.singlePrice.match(/^\d+([\.|,]\d{1,2})?$/);
+      const formatOkay = (consumable.singlePrice === undefined || consumable.singlePrice === '') ? true : (typeof consumable.singlePrice === 'string') && consumable.singlePrice.match(/^\d+([\.|,]\d{1,2})?$/);
       return inputOkay && formatOkay;
     });
 
@@ -132,7 +132,10 @@ export default defineComponent({
 
     const add = () => {
       if (typeof consumable.singlePrice !== 'number') {
-        consumable.singlePrice = parseFloat(`${consumable.singlePrice}`.replace(',', '.').replace(/(\.{2,})/, '.'));
+        if (consumable.singlePrice === '') consumable.singlePrice = undefined;
+        if (consumable.singlePrice !== undefined) {
+          consumable.singlePrice = parseFloat(`${consumable.singlePrice}`.replace(',', '.').replace(/(\.{2,})/, '.'));
+        }
       }
       consumedStore.add(consumable as any);
       openLoc.value = false;
